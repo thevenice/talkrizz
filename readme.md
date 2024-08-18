@@ -1,7 +1,3 @@
-Sure, here's a polished README for TalkRizz with engaging emojis:
-
----
-
 # Welcome to TalkRizz! 🌟
 
 ## Connect. Inspire. Transform. 🌍
