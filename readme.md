@@ -28,7 +28,7 @@ We value your privacy. TalkRizz is open-source and committed to ensuring that yo
 ### Getting Started 🚀
 
 1. **Use the App**: [https://talkrizz.com]
-2. **Create an Account**: Sign up and set up your profile.
+2. **No Account**: No Sign up or No set up.
 3. **Start Connecting**: Browse and connect with inspiring people worldwide.
 
 ### Stay Connected 🌟
