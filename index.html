@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TalkRizz - Connect with Strangers | Random Chat App</title>
+    <meta name="description" content="TalkRizz is the coolest way to chat with strangers online. Connect instantly, make new friends, and have exciting conversations. Join the Gen Z chat revolution now!">
+    <meta name="keywords" content="TalkRizz, random chat, stranger talk, online chat, Gen Z, make friends">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        :root {
+            --bg-color: #fff;
+            --bg-color-card: #7293ff;
+            --text-color: #333;
+        }
+        
+        .dark-mode {
+            --bg-color: #0a0a0a;
+            --bg-color-card: #35457a;
+            --text-color: #fff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+        }
+        .bg-color-card { background-color: var(--bg-color-card)};
+    </style>
+</head>
+<body class="bg-color min-h-screen flex flex-col transition-colors duration-300">
+    <div class="container mx-auto max-w-6xl p-4 md:p-8 flex flex-col flex-grow">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-8 md:mb-12 space-y-4 md:space-y-0">
+            <h1 class="text-3xl md:text-4xl font-bold text-[#3b82f6]">TalkRizz</h1>
+            <div class="flex items-center space-x-4">
+                <select id="langSelect" class="bg-color text-black px-2 py-1 rounded-full border-b-2 border-solid border">
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="ja">日本語</option> <!-- Japanese -->
+                    <option value="ko">한국어</option> <!-- Korean -->
+                    <option value="hi">हिन्दी</option> <!-- Hindi -->
+                    <option value="kn">ಕನ್ನಡ</option> <!-- Kannada -->
+                </select>
+                <button id="darkModeToggle" class="bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded-full">
+                    <span id="dark-mode-toggle-icon">🌙</span>
+                </button>
+                
+                <div class="text-sm bg-[#3b82f6] text-white px-3 py-1 rounded-full font-semibold">
+                    <span class="font-bold">3000+</span> <span id="rizzlersOnline">Rizzlers Online</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-color-card rounded-lg shadow-2xl p-6 md:p-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-4 md:mb-6"><span id="makeConnections">Make Connections</span><br><span id="makingImpact">Making an Impact</span></h2>
+                <p class="text-base md:text-lg text-gray-600 dark:text-gray-300 mb-6 md:mb-8" id="appDescription">TalkRizz is an app where young people connect with strangers they find inspiring, and start shaping the future world while making new friends.</p>
+                
+                <div class="space-y-4">
+                    <button id="enterChatBtn" class="w-full bg-[#3b82f6] text-white px-4 md:px-6 py-2 md:py-3 rounded-full text-base md:text-lg font-semibold hover:bg-blue-600 transition duration-300 ease-in-out transform hover:scale-105">Enter Chat Room</button>
+                    <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400 text-center" id="ageConfirmation">By entering, you confirm that you are 18 years or older.</p>
+                </div>
+            </div>
+
+            <div class="bg-color-card rounded-lg shadow-2xl p-6 md:p-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-4 md:mb-6" id="whatIsTalkRizz">What really is TalkRizz?</h2>
+                <p class="text-base md:text-lg text-gray-600 dark:text-gray-300 mb-4" id="talkRizzDescription">TalkRizz is putting people where you expect to connect over time. There are a lot of ways to start, and a lot of reasons a lot of people do it:</p>
+                
+                <div class="space-y-4">
+                    <div class="bg-yellow-100 text-black p-4 rounded-lg">
+                        <h3 class="font-semibold text-lg md:text-xl mb-2" id="meetNewPeople">Privacy Matters</h3>
+                        <p id="meetNewPeopleDesc">We're open-source and committed to your privacy. None of your conversations are saved, allowing you to speak freely with anyone, anytime.</p>
+                    </div>
+                    <div class="bg-yellow-100 text-black p-4 rounded-lg">
+                        <h3 class="font-semibold text-lg md:text-xl mb-2" id="meetNewPeople">Meet New People</h3>
+                        <p id="meetNewPeopleDesc">Connect with strangers from around the world and expand your social circle.</p>
+                    </div>
+                    <div class="bg-green-100 text-black p-4 rounded-lg">
+                        <h3 class="font-semibold text-lg md:text-xl mb-2" id="learnPerspectives">Learn New Perspectives</h3>
+                        <p id="learnPerspectivesDesc">Engage in conversations that challenge your thinking and broaden your horizons.</p>
+                    </div>
+                    <div class="bg-blue-100 text-black p-4 rounded-lg">
+                        <h3 class="font-semibold text-lg md:text-xl mb-2" id="practiceSkills">Practice Social Skills</h3>
+                        <p id="practiceSkillsDesc">Improve your communication skills in a low-pressure environment.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div class="mt-8 md:mt-12 bg-color-card rounded-lg shadow-2xl p-6 md:p-8">
+            <h2 class="text-2xl md:text-3xl font-bold text-white mb-4 md:mb-6" id="userTestimonials">What our users say</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+                <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+                    <p class="text-black dark:text-gray-200 mb-2" id="testimonial1">"I love that TalkRizz doesn't overcomplicate things. It's easy to start chatting and meeting new people!"</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">- Alex, 22</p>
+                </div>
+                <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+                    <p class="text-black dark:text-gray-200 mb-2" id="testimonial2">"TalkRizz has helped me make friends from all over the world. It's amazing how diverse the community is!"</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">- Sophia, 19</p>
+                </div>
+                <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+                    <p class="text-black dark:text-gray-200 mb-2" id="testimonial3">"As an introvert, TalkRizz has been a great way for me to practice socializing without the pressure of face-to-face interactions."</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">- Jordan, 21</p>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center text-gray-600 dark:text-gray-400 mt-8 md:mt-12">
+            <p>&copy; 2024 TalkRizz. <span id="allRightsReserved">All rights reserved.</span> | <a href="/p-n-t.html" class="underline" id="privacyPolicy">Privacy Policy</a> | <a href="p-n-t.html" class="underline" id="termsOfService">Terms of Service</a></p>
+        </footer>
+    </div>
+
+    <!-- Age Verification Modal -->
+    <div id="ageVerificationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-color-card rounded-lg p-8 max-w-md w-full">
+            <h2 class="text-2xl font-bold text-white mb-4" id="ageVerificationTitle">Age Verification</h2>
+            <p class="text-gray-300 mb-6" id="ageVerificationText">You must be at least 18 years old to use TalkRizz. Please confirm your age.</p>
+            <div class="flex justify-end">
+                <button id="confirmAgeBtn" class="bg-[#3b82f6] text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-300 ease-in-out transform hover:scale-105">I am 18+</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+    const darkModeToggleIcon = document.getElementById('dark-mode-toggle-icon');
+
+    // Function to set dark mode
+    function setDarkMode(isDark) {
+        if (isDark) {
+            body.classList.add('dark-mode');
+            darkModeToggleIcon.textContent = '☀️'; // Light mode icon
+            localStorage.setItem('darkMode', 'true');
+        } else {
+            body.classList.remove('dark-mode');
+            darkModeToggleIcon.textContent = '🌙'; // Dark mode icon
+            localStorage.setItem('darkMode', 'false');
+        }
+    }
+
+    darkModeToggle.addEventListener('click', () => {
+        const isCurrentlyDark = body.classList.contains('dark-mode');
+        setDarkMode(!isCurrentlyDark);
+    });
+
+    const darkMode = localStorage.getItem('darkMode') === 'true';
+    setDarkMode(darkMode);
+});
+
+
+
+        // Age Verification Modal
+        const enterChatBtn = document.getElementById('enterChatBtn');
+        const ageVerificationModal = document.getElementById('ageVerificationModal');
+        const yesBtn = document.getElementById('confirmAgeBtn');
+        const langSelect = document.getElementById('langSelect');
+
+        // Age verification
+        enterChatBtn.addEventListener('click', () => {
+            ageVerificationModal.classList.remove('hidden');
+        });
+
+        yesBtn.addEventListener('click', () => {
+            window.location.href = 'chat.html';
+        });
+
+        // Multi-language support
+        document.addEventListener('DOMContentLoaded', () => {
+            const langSelect = document.getElementById('langSelect');
+            
+            // Load the language file based on selection
+            const loadLanguage = (lang) => {
+                fetch(`locales/${lang}.json`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.querySelectorAll('[id]').forEach(el => {
+                            const key = el.id;
+                            if (data[key]) {
+                                el.textContent = data[key];
+                            }
+                        });
+                    })
+                    .catch(error => console.error('Error loading language file:', error));
+            };
+            
+            // Handle language selection
+            langSelect.addEventListener('change', (event) => {
+                const selectedLang = event.target.value;
+                loadLanguage(selectedLang);
+            });
+
+            // Load default language
+            loadLanguage(langSelect.value);
+        });
+
+</script>
+</body>
+</html>

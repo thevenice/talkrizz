@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TalkRizz - Connect with Strangers | Random Chat App</title>
+    <meta name="description" content="TalkRizz is the coolest way to chat with strangers online. Connect instantly, make new friends, and have exciting conversations. Join the Gen Z chat revolution now!">
+    <meta name="keywords" content="TalkRizz, random chat, stranger talk, online chat, Gen Z, make friends">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        .dark-mode {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+
+        .chat-bubble {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 18px;
+            margin-bottom: 10px;
+            word-wrap: break-word;
+        }
+
+        .partner-bubble {
+            background-color: #e5e7eb;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .user-bubble {
+            background-color: #3b82f6;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .banner-scroller {
+            overflow: hidden;
+            white-space: nowrap;
+            min-width: 320px;
+            max-width: 100%;
+            height: 50px;
+            position: relative;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .banner-scroller img {
+            display: inline-block;
+            min-width: 320px;
+            max-width: 100%;
+            height: 50px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        /* Custom scrollbar styles */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #3b82f6;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <div class="container mx-auto max-w-4xl p-4 flex flex-col flex-grow relative">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-4">
+            <div class="flex items-center">
+                <h1 class="text-3xl font-bold text-blue-500 dark:text-blue-300">TalkRizz</h1>
+                <span class="ml-2 text-lg text-gray-600 dark:text-gray-300">Vibe with Strangers 🚀</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="text-sm bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 px-3 py-1 rounded-full">
+                    <span class="font-bold">420+</span> Rizzlers Online
+                </div>
+                <button id="darkModeToggle" class="bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded-full">
+                    <span id="dark-mode-toggle-icon">🌙</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Banner Scroller -->
+        <div id="bannerScroller" class="banner-scroller mb-4">
+            <!-- Banners will be loaded here -->
+        </div>
+
+        <!-- Chat Area -->
+        <div id="chat-area" class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex-grow overflow-y-auto mb-4 p-4 rounded-lg shadow-md flex flex-col">
+            <!-- Messages will appear here -->
+        </div>
+
+        <!-- Input Area -->
+        <div class="bg-white dark:bg-gray-800 p-4 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md flex items-center gap-2">
+            <button id="leave-btn" class="bg-red-500 dark:bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-600 dark:hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-300 ease-in-out transform hover:scale-105" disabled>Leave</button>
+            <input id="msg-input" type="text" class="flex-1 p-3 border border-gray-300 dark:border-gray-600 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm hidden" placeholder="Drop your thoughts...">
+            <button id="toggle-btn" class="bg-green-500 dark:bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-600 dark:hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-300 ease-in-out transform hover:scale-105">Find Rizzler</button>
+        </div>
+    </div>
+
+    <footer class="bg-gray-800 dark:bg-gray-900 text-white text-center py-4 mt-8">
+        <p>&copy; 2024 TalkRizz. All rights reserved. | <a href="p-n-t.html" class="underline">Privacy Policy</a> | <a href="p-n-t.html" class="underline">Terms of Service</a></p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const body = document.body;
+            const darkModeToggleIcon = document.getElementById('dark-mode-toggle-icon');
+
+            // Initialize dark mode from localStorage
+            const darkMode = localStorage.getItem('darkMode') === 'true';
+            setDarkMode(darkMode);
+
+            darkModeToggle.addEventListener('click', () => {
+                const isDark = body.classList.toggle('dark-mode');
+                setDarkMode(isDark);
+            });
+
+            function setDarkMode(isDark) {
+                if (isDark) {
+                    body.classList.add('dark-mode');
+                    darkModeToggleIcon.textContent = '☀️'; // Light mode icon
+                    localStorage.setItem('darkMode', 'true');
+                } else {
+                    body.classList.remove('dark-mode');
+                    darkModeToggleIcon.textContent = '🌙'; // Dark mode icon
+                    localStorage.setItem('darkMode', 'false');
+                }
+            }
+
+            // Load banners from JSON file
+            fetch('banner_info.json')
+                .then(response => response.json())
+                .then(banners => {
+                    const bannerScroller = document.getElementById('bannerScroller');
+                    let bannerIndex = 0;
+
+                    function updateBanner() {
+                        const banner = banners[bannerIndex];
+                        bannerScroller.innerHTML = `<img src="${banner.banner_path}" alt="Ad Banner" onclick="window.open('${banner.banner_url}', '_blank')">`;
+                        bannerIndex = (bannerIndex + 1) % banners.length;
+                    }
+
+                    setInterval(updateBanner, 5000); // Change banner every 5 seconds
+                    updateBanner(); // Initial update
+                })
+                .catch(error => console.error('Error loading banners:', error));
+        });
+    </script>
+    <script src="client.js"></script>
+</body>
+</html>
